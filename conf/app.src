@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/YunoHost/pepettes/archive/v1.0.0.tar.gz
-SOURCE_SUM=9d29b72b5e88808c9a95132753d013f3f215c531b0d5bdf67cdbc7a9a29df27b
+SOURCE_URL=https://github.com/YunoHost/pepettes/archive/v1.0.1.tar.gz
+SOURCE_SUM=9792ed5589d4a55bd619edc7aa61a1a78f34c5a4e7095b2292ac09b66c8b9a58
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true

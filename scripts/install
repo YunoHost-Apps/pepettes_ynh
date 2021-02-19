@@ -119,6 +119,13 @@ venv/bin/pip install -r requirements.txt
 venv/bin/pip install gunicorn
 mkdir -p /var/log/$app
 chown -R $app:www-data /var/log/$app
+cat <<EOF >> wsgi.py 
+from server import app
+
+if __name__ == "__main__":
+    app.run()
+EOF
+popd
 #=================================================
 
 #=================================================
@@ -158,7 +165,9 @@ done
 
 # Set permissions to app files
 chown -R root: $final_path
-chmod go=--- $final_path/settings.py
+chown pepettes:root $final_path
+chown pepettes:root $final_path/settings.py
+chmod o=--- $final_path/settings.py
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

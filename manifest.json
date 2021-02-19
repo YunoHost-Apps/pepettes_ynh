@@ -6,7 +6,7 @@
         "en": "A simple donation form with stripe",
         "fr": "Un simple formulaire de don avec stripe"
     },
-    "version": "1.0~ynh1",
+    "version": "1.0.1~ynh1",
     "url": "https://github.com/YunoHost/pepettes/",
     "license": "MIT",
     "maintainer": {
@@ -15,7 +15,7 @@
         "url": "http://reflexlibre.net"
     },
     "requirements": {
-        "yunohost": ">= 4.1.3"
+        "yunohost": ">= 4.1.2"
     },
     "multi_instance": true,
     "services": [
