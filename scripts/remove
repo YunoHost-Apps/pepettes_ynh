@@ -72,7 +72,7 @@ ynh_remove_nginx_config
 #=================================================
 
 # Remove the log files
-ynh_secure_remove --file="/var/log/$app/"
+#ynh_secure_remove --file="/var/log/$app/"
 
 #=================================================
 # GENERIC FINALIZATION
