@@ -9,13 +9,14 @@
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-Pepettes is a donation form working with stripe.
+
+Pepettes is a donation form based on Stripe.
 
 **Shipped version:** 1.0
 
 ## Screenshots
 
-![](Link to a screenshot of this app.)
+(none yet)
 
 ## Demo
 
@@ -23,7 +24,7 @@ Pepettes is a donation form working with stripe.
 
 ## Configuration
 
-How to configure this app: From an admin panel, a plain file with SSH, or any other way.
+How to configure this app: During the installation, or in `settings.py` after installation.
 
 ## Documentation
 
@@ -44,10 +45,11 @@ Can the app be used by multiple users? yes
 
 ## Limitations
 
-* Any known limitations.
+(none)
 
 ## Additional information
 
+(none)
 
 ## Links
 
