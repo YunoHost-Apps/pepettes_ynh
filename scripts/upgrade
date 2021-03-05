@@ -157,8 +157,8 @@ ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
 chown -R root: $final_path
-chown pepettes:root $final_path
-chown pepettes:root $final_path/settings.py
+chown $app:root $final_path
+chown $app:root $final_path/settings.py
 chmod o=--- $final_path/settings.py
 
 #=================================================
