@@ -5,9 +5,9 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="python3-venv python3-dev python3-pip"
+pkg_dependencies="curl"
 
-python_version=3.9.2
+python_version=3.7.3
 
 #=================================================
 # PERSONAL HELPERS
