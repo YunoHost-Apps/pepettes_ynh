@@ -101,7 +101,7 @@ ynh_install_python --python_version=$python_version
 ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC UPGRADE
@@ -156,10 +156,7 @@ done
 ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
-chown -R root: $final_path
-chown $app:root $final_path
-chown $app:root $final_path/settings.py
-chmod o=--- $final_path/settings.py
+chown -R $app:root $final_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST

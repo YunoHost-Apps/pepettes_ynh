@@ -109,7 +109,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC SETUP
@@ -164,10 +164,7 @@ done
 ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
-chown -R root: $final_path
-chown $app:root $final_path
-chown $app:root $final_path/settings.py
-chmod o=--- $final_path/settings.py
+chown -R $app:root $final_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
