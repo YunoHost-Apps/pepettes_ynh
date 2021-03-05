@@ -99,8 +99,9 @@ ynh_use_python () {
     if [[ :$PATH: != *":$python_path"* ]]; then
         PATH="$python_path:$PATH"
     fi
+    python_path="$PATH"
     # Create an alias to easily load the PATH
-    ynh_python_load_path="PATH=$PATH"
+    ynh_python_load_path="PATH=$python_path"
 
     # Sets the local application-specific Python version
     (cd $final_path
@@ -175,7 +176,7 @@ ynh_install_python () {
     pyenv install --skip-existing $python_version &>/dev/null
 
     # Remove app virtualenv
-    if $(pyenv virtualenvs | grep $YNH_APP_INSTANCE_NAME)
+    if `pyenv virtualenvs | grep "$YNH_APP_INSTANCE_NAME " 1>/dev/null 2>&1`
     then
         pyenv virtualenv-delete --force $YNH_APP_INSTANCE_NAME
     fi
