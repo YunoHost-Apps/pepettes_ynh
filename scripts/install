@@ -174,7 +174,7 @@ chmod o=--- $final_path/settings.py
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="A simple donation form" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="A simple donation form" --log_type="systemd"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -182,7 +182,7 @@ yunohost service add $app --description="A simple donation form" --log="/var/log
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started"
 
 #=================================================
 # SETUP SSOWAT
