@@ -9,7 +9,6 @@
 If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/install) to learn how to install it.*
 
 ## Overview
-
 Pepettes is a donation form based on Stripe.
 
 **Shipped version:** 1.0
@@ -54,7 +53,6 @@ Can the app be used by multiple users? yes
 ## Links
 
  * Report a bug: https://github.com/YunoHost-Apps/pepettes_ynh/issues
- * App website: -
  * Upstream app repository: https://github.com/YunoHost/pepettes/
  * YunoHost website: https://yunohost.org/
 
@@ -62,7 +60,6 @@ Can the app be used by multiple users? yes
 
 ## Developer info
 
-**Only if you want to use a testing branch for coding, instead of merging directly into master.**
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.

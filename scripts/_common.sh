@@ -7,6 +7,8 @@
 # dependencies used by the app
 pkg_dependencies="python3-venv python3-dev python3-pip"
 
+python_version=3.9.2
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================

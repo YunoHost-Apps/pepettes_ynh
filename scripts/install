@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_install_python
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -14,7 +15,6 @@ source /usr/share/yunohost/helpers
 #=================================================
 
 ynh_clean_setup () {
-	### Remove this function if there's nothing to clean before calling the remove script.
 	true
 }
 # Exit if an error occurs during the execution of the script
@@ -84,6 +84,7 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 ynh_script_progression --message="Installing dependencies..." --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
+ynh_install_python --python_version=$python_version
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -113,20 +114,23 @@ ynh_system_user_create --username=$app
 #=================================================
 # SPECIFIC SETUP
 #=================================================
+# INSTALL PYTHON DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing Python dependencies..."
+
 pushd $final_path
-python3 -m venv venv
-venv/bin/pip install -r requirements.txt
-venv/bin/pip install gunicorn
-mkdir -p /var/log/$app
-chown -R $app:www-data /var/log/$app
-cat <<EOF >> wsgi.py 
+	ynh_use_python
+	$ynh_pip install -r requirements.txt
+	$ynh_pip install gunicorn
+	mkdir -p /var/log/$app
+	chown -R $app:www-data /var/log/$app
+	cat <<EOF >> wsgi.py 
 from server import app
 
 if __name__ == "__main__":
     app.run()
 EOF
 popd
-#=================================================
 
 #=================================================
 # SETUP SYSTEMD
@@ -139,17 +143,11 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
+ynh_script_progression --message="Modifying a config file..."
 
 ynh_add_config --template="../conf/gunicorn.py" --destination="$final_path/gunicorn.py"
 ynh_add_config --template="../conf/settings.py" --destination="$final_path/settings.py"
 
-#=================================================
-# STORE THE CONFIG FILE CHECKSUM
-#=================================================
-
-# Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$final_path/gunicorn.py"
-ynh_store_file_checksum --file="$final_path/settings.py"
 for price in $(echo $prices | sed "s/,/ /"); do
     frequency=$(echo $price | cut -d/ -f1)
     currency=$(echo $price | cut -d/ -f2)
@@ -162,6 +160,7 @@ done
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
+ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions to app files
 chown -R root: $final_path

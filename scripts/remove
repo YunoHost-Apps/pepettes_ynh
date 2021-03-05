@@ -7,6 +7,7 @@
 #=================================================
 
 source _common.sh
+source ynh_install_python
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -47,6 +48,7 @@ ynh_remove_systemd_config
 ynh_script_progression --message="Removing dependencies..." --weight=1
 
 # Remove metapackage and its dependencies
+ynh_remove_python
 ynh_remove_app_dependencies
 
 #=================================================
@@ -70,9 +72,10 @@ ynh_remove_nginx_config
 #=================================================
 # REMOVE VARIOUS FILES
 #=================================================
+ynh_script_progression --message="Removing various files..."
 
 # Remove the log files
-#ynh_secure_remove --file="/var/log/$app/"
+ynh_secure_remove --file="/var/log/$app"
 
 #=================================================
 # GENERIC FINALIZATION
