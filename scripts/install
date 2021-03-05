@@ -25,7 +25,7 @@ ynh_abort_if_errors
 #=================================================
 
 domain=$YNH_APP_ARG_DOMAIN
-path_url=$YNH_APP_ARG_PATH
+path_url="/"
 is_public=$YNH_APP_ARG_IS_PUBLIC
 project_name=$YNH_APP_ARG_PROJECT_NAME
 contact_url=$YNH_APP_ARG_CONTACT_URL
@@ -120,6 +120,7 @@ ynh_script_progression --message="Installing Python dependencies..."
 
 pushd $final_path
 	ynh_use_python
+	$ynh_pip install --upgrade pip
 	$ynh_pip install -r requirements.txt
 	$ynh_pip install gunicorn
 	mkdir -p /var/log/$app
@@ -138,7 +139,7 @@ popd
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 # Create a dedicated systemd config
-ynh_add_systemd_config
+ynh_add_systemd_config --others_var="python_path"
 
 #=================================================
 # MODIFY A CONFIG FILE
@@ -181,7 +182,7 @@ yunohost service add $app --description="A simple donation form" --log="/var/log
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"
 
 #=================================================
 # SETUP SSOWAT
