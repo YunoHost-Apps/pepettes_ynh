@@ -12,7 +12,7 @@
                 prices="one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV"
 	; Checks
 		pkg_linter=1
-		setup_sub_dir=1
+		setup_sub_dir=0
 		setup_root=1
 		setup_nourl=0
 		setup_private=1
