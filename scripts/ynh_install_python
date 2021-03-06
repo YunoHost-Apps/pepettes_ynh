@@ -100,9 +100,8 @@ ynh_use_python () {
     if [[ :$PATH: != *":$python_path"* ]]; then
         PATH="$python_path:$PATH"
     fi
-    python_path="$PATH"
     # Create an alias to easily load the PATH
-    ynh_python_load_path="PATH=$python_path"
+    ynh_python_load_path="PATH=$PATH"
 
     # Sets the local application-specific Python version
     (cd $final_path
