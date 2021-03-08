@@ -64,7 +64,7 @@ SOURCE_SUM=27ae3de027a6f6dccdca4085225512e559c6b94b31625bd2b357a18890a1e618" > "
 #
 #
 # Finally, to start a Python service with the correct version, 2 solutions
-#  Either the app is dependent of Python or pip, but does not called it directly.
+#  Either the app is dependent of python or pip, but does not called it directly.
 #  In such situation, you need to load PATH
 #    `Environment="__YNH_PYTHON_LOAD_ENV_PATH__"`
 #    `ExecStart=__FINALPATH__/my_app`
@@ -83,6 +83,7 @@ SOURCE_SUM=27ae3de027a6f6dccdca4085225512e559c6b94b31625bd2b357a18890a1e618" > "
 # Requires YunoHost version 2.7.12 or higher.
 ynh_use_python () {
     python_version=$(ynh_app_setting_get --app=$app --key=python_version)
+
     # Get the absolute path of this version of Python
     python_path="$python_version_path/$YNH_APP_INSTANCE_NAME/bin"
 
@@ -111,9 +112,6 @@ ynh_use_python () {
 # Install a specific version of Python
 #
 # ynh_install_python will install the version of Python provided as argument by using pyenv.
-#
-# pyenv (Python Version Management) stores the target Python version in a .python_version file created in the target folder (using pyenv local <version>)
-# It then uses that information for every Python user that uses pyenv provided Python command
 #
 # This helper creates a /etc/profile.d/pyenv.sh that configures PATH environment for pyenv
 # for every LOGIN user, hence your user must have a defined shell (as opposed to /usr/sbin/nologin)
@@ -209,7 +207,7 @@ ynh_remove_python () {
     # Load pyenv path in PATH
     local CLEAR_PATH="$pyenv_install_dir/bin:$PATH"
 
-    # Remove /usr/local/bin in PATH in case of python prior installation
+    # Remove /usr/local/bin in PATH in case of Python prior installation
     PATH=$(echo $CLEAR_PATH | sed 's@/usr/local/bin:@@')
 
     pyenv virtualenv-delete --force $YNH_APP_INSTANCE_NAME
