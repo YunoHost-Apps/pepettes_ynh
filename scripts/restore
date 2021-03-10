@@ -72,7 +72,7 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 ynh_script_progression --message="Restoring user rights..."
 
 # Restore permissions on app files
-chown -R $app:root $final_path
+chown -R $app:www-data $final_path
 chmod o=--- $final_path
 
 #=================================================
