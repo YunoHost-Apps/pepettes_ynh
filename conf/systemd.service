@@ -3,11 +3,11 @@ Description=__APP__ Daemon
 After=network.target
 
 [Service]
-PIDFile=/run/gunicorn/__APP__-pid
+PIDFile=__FINALPATH__/__APP__-pid
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__
-ExecStart=__PYTHON_PATH__/gunicorn -c __FINALPATH__/gunicorn.py wsgi:app
+ExecStart=__PYTHON_PATH__/gunicorn -c __FINALPATH__/gunicorn.py wsgi:app --pid __FINALPATH__/__APP__-pid
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
