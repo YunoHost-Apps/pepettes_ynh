@@ -67,15 +67,6 @@ ynh_script_progression --message="Recreating the dedicated system user..." --wei
 ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
-# RESTORE USER RIGHTS
-#=================================================
-ynh_script_progression --message="Restoring user rights..."
-
-# Restore permissions on app files
-chown -R $app:www-data $final_path
-chmod o=--- $final_path
-
-#=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # REINSTALL DEPENDENCIES
@@ -99,6 +90,15 @@ pushd $final_path
 	mkdir -p /var/log/$app
 	chown -R $app:www-data /var/log/$app
 popd
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
+ynh_script_progression --message="Restoring user rights..."
+
+# Restore permissions on app files
+chown -R $app:www-data $final_path
+chmod o=--- $final_path
 
 #=================================================
 # RESTORE SYSTEMD
