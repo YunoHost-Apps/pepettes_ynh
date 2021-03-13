@@ -253,7 +253,7 @@ ynh_cleanup_python () {
     local required_python_versions=""
     for installed_app in $installed_apps
     do
-        local installed_app_python_version=$(yunohost app setting $installed_app python_version)
+        local installed_app_python_version=$(ynh_app_setting_get --app=$installed_app --key="python_version")
         if [[ $installed_app_python_version ]]
         then
             required_python_versions="${installed_app_python_version}\n${required_python_versions}"
