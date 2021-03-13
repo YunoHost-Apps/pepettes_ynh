@@ -1,47 +1,20 @@
 #!/bin/bash
 
-pyenv_version=1.2.23
-pyenv_virtualenv_version=1.1.5
+ynh_python_try_bash_extension() {
+  if [ -x src/configure ]; then
+    src/configure && make -C src || {
+      echo "Optional bash extension failed to build, but things will still work normally."
+    }
+  fi
+}
+
 pyenv_install_dir="/opt/pyenv"
 python_version_path="$pyenv_install_dir/versions"
 # PYENV_ROOT is the directory of pyenv, it needs to be loaded as a environment variable.
 export PYENV_ROOT="$pyenv_install_dir"
 
 # Required dependencies
-pyenv_dependencies="build-essential libssl1.0-dev|libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git"
-
-# Install Python Version Management
-#
-# [internal]
-#
-# usage: ynh_install_pyenv
-#
-# Requires YunoHost version 2.7.12 or higher.
-ynh_install_pyenv () {
-    ynh_print_info --message="Installation of pyenv - Python Version Management - pyenv-$pyenv_version/pyenv-virtualenv-$pyenv_virtualenv_version"
-
-    # Build an app.src for pyenv
-    mkdir -p "../conf"
-    echo "SOURCE_URL=https://github.com/pyenv/pyenv/archive/v${pyenv_version}.tar.gz
-SOURCE_SUM=805058aa5ce257157fb4769543e6a43bac45a88c723ff3c4fcf5b4f759056bf5" > "../conf/pyenv.src"
-    # Download and extract pyenv
-    ynh_setup_source --dest_dir="$pyenv_install_dir" --source_id=pyenv
-
-    # Build an app.src for pyenv-virtualenv
-    mkdir -p "../conf"
-    echo "SOURCE_URL=https://github.com/pyenv/pyenv-virtualenv/archive/v${pyenv_virtualenv_version}.tar.gz
-SOURCE_SUM=27ae3de027a6f6dccdca4085225512e559c6b94b31625bd2b357a18890a1e618" > "../conf/pyenv-virtualenv.src"
-    # Download and extract pyenv-virtualenv
-    ynh_setup_source --dest_dir="$pyenv_install_dir/plugins/pyenv-virtualenv" --source_id=pyenv-virtualenv
-
-    (cd $pyenv_install_dir
-    ./src/configure && make -C src)
-
-    # Create shims directory if needed
-    if [ ! -d $pyenv_install_dir/shims ] ; then
-        mkdir $pyenv_install_dir/shims
-    fi
-}
+pyenv_dependencies="build-essential libssl1.0-dev|libssl-dev zlib1g-dev libbz2-dev libreadline-dev|libedit-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git"
 
 # Load the version of Python for an app, and set variables.
 #
@@ -105,8 +78,9 @@ ynh_use_python () {
     ynh_python_load_path="PATH=$PATH"
 
     # Sets the local application-specific Python version
-    (cd $final_path
-    pyenv local $python_version)
+    pushd $final_path
+        $pyenv_install_dir/bin/pyenv local $python_version
+    popd
 }
 
 # Install a specific version of Python
@@ -133,12 +107,6 @@ ynh_install_python () {
     # Manage arguments with getopts
     ynh_handle_getopts_args "$@"
 
-    # Store python_version into the config of this app
-    ynh_app_setting_set --app=$YNH_APP_INSTANCE_NAME --key=python_version --value=$python_version
-
-    # Create $pyenv_install_dir if doesn't exist already
-    mkdir -p "$pyenv_install_dir/plugins/pyenv-virtualenv"
-
     # Install required dependencies
     ynh_add_app_dependencies --package="$pyenv_dependencies"
 
@@ -151,17 +119,65 @@ ynh_install_python () {
     # Move an existing Python binary, to avoid to block pyenv
     #test -x /usr/bin/python && mv /usr/bin/python /usr/bin/python_pyenv
 
-    # If pyenv is not previously setup, install it
-    if ! type pyenv > /dev/null 2>&1
-    then
-        ynh_install_pyenv
-    elif dpkg --compare-versions "$($pyenv_install_dir/bin/pyenv --version | cut -d" " -f2)" lt $pyenv_version
-    then
-        ynh_install_pyenv
-    elif dpkg --compare-versions "$($pyenv_install_dir/bin/pyenv virtualenv --version | cut -d" " -f2)" lt $pyenv_virtualenv_version
-    then
-        ynh_install_pyenv
+    # Install or update pyenv
+    pyenv="$(command -v pyenv $pyenv_install_dir/bin/pyenv | head -1)"
+    if [ -n "$pyenv" ]; then
+        ynh_print_info --message="pyenv already seems installed in \`$pyenv'."
+        pushd "${pyenv%/*/*}"
+            if git remote -v 2>/dev/null | grep -q pyenv; then
+                echo "Trying to update with git..."
+                git pull -q --tags origin master
+                cd ..
+                ynh_python_try_bash_extension
+            fi
+        popd
+    else
+        ynh_print_info --message="Installing pyenv with git..."
+        mkdir -p $pyenv_install_dir
+        pushd $pyenv_install_dir
+            git init -q
+            git remote add -f -t master origin https://github.com/pyenv/pyenv.git > /dev/null 2>&1
+            git checkout -q -b master origin/master
+            ynh_python_try_bash_extension
+            pyenv=$pyenv_install_dir/bin/pyenv
+        popd
     fi
+
+    pyenv_virtualenv="$(command -v "$pyenv_install_dir"/plugins/*/bin/pyenv-virtualenv pyenv-virtualenv | head -1)"
+    if [ -n "$pyenv_virtualenv" ]; then
+        ynh_print_info --message="\`pyenv virtualenv' command already available in \`$pyenv_virtualenv'."
+        pushd "${pyenv_virtualenv%/*/*}"
+            if git remote -v 2>/dev/null | grep -q pyenv-virtualenv; then
+                ynh_print_info --message="Trying to update pyenv-virtualenv with git..."
+                git pull -q origin master
+            fi
+        popd
+    else
+        ynh_print_info --message="Installing pyenv-virtualenv with git..."
+        mkdir -p "${pyenv_install_dir}/plugins"
+        git clone -q https://github.com/pyenv/pyenv-virtualenv.git "${pyenv_install_dir}/plugins/pyenv-virtualenv"
+    fi
+
+    pyenv_latest="$(command -v "$pyenv_install_dir"/plugins/*/bin/pyenv-latest pyenv-latest | head -1)"
+    if [ -n "$pyenv_latest" ]; then
+        ynh_print_info --message="\`pyenv latest' command already available in \`$pyenv_latest'."
+        pushd "${pyenv_latest%/*/*}"
+            if git remote -v 2>/dev/null | grep -q xxenv-latest; then
+                ynh_print_info --message="Trying to update xxenv-latest with git..."
+                git pull -q origin master
+            fi
+        popd
+    else
+        ynh_print_info --message="Installing xxenv-latest with git..."
+        mkdir -p "${pyenv_install_dir}/plugins"
+        git clone -q https://github.com/momo-lab/xxenv-latest.git "${pyenv_install_dir}/plugins/xxenv-latest"
+    fi
+
+    # Enable caching
+    mkdir -p "${pyenv_install_dir}/cache"
+
+    # Create shims directory if needed
+    mkdir -p "${pyenv_install_dir}/shims"
 
     # Restore /usr/local/bin in PATH
     PATH=$CLEAR_PATH
@@ -170,8 +186,12 @@ ynh_install_python () {
     # test -x /usr/bin/python_pyenv && mv /usr/bin/python_pyenv /usr/bin/python
 
     # Install the requested version of Python
-    ynh_print_info --message="Installation of Python-"$python_version
-    pyenv install --skip-existing $python_version &>/dev/null
+    local final_python_version=$(pyenv latest --print $python_version)
+    ynh_print_info --message="Installation of Python-$python_version"
+    pyenv install --skip-existing $final_python_version > /dev/null 2>&1
+
+    # Store python_version into the config of this app
+    ynh_app_setting_set --app=$YNH_APP_INSTANCE_NAME --key=python_version --value=$python_version
 
     # Remove app virtualenv
     if `pyenv virtualenvs | grep --quiet "$YNH_APP_INSTANCE_NAME " 1>/dev/null 2>&1`
@@ -246,7 +266,7 @@ ynh_cleanup_python () {
     do
         if ! `echo ${required_python_versions} | grep "${installed_python_version}" 1>/dev/null 2>&1`
         then
-            ynh_print_info --message="Removing of Python-"$installed_python_version
+            ynh_print_info --message="Removing of Python-$installed_python_version"
             $pyenv_install_dir/bin/pyenv uninstall --force $installed_python_version
         fi
     done
@@ -255,8 +275,8 @@ ynh_cleanup_python () {
     if [[ ! $required_python_versions ]]
     then
         # Remove pyenv environment configuration
-        ynh_print_info --message="Removing of pyenv-"$pyenv_version
+        ynh_print_info --message="Removing of pyenv-$pyenv_version"
         ynh_secure_remove --file="$pyenv_install_dir"
-        rm /etc/profile.d/pyenv.sh
+        ynh_secure_remove --file="/etc/profile.d/pyenv.sh"
     fi
 }
