@@ -3,7 +3,7 @@
 ynh_python_try_bash_extension() {
   if [ -x src/configure ]; then
     src/configure && make -C src || {
-      echo "Optional bash extension failed to build, but things will still work normally."
+      ynh_print_info --message="Optional bash extension failed to build, but things will still work normally."
     }
   fi
 }
