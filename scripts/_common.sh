@@ -7,7 +7,7 @@
 # dependencies used by the app
 pkg_dependencies="curl"
 
-python_version=3.7.3
+PYTHON_VERSION=3.7.3
 
 #=================================================
 # PERSONAL HELPERS

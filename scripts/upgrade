@@ -93,7 +93,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Upgrading dependencies..." --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_python --python_version=$python_version
+ynh_install_python --python_version=$PYTHON_VERSION
 
 #=================================================
 # CREATE DEDICATED USER
