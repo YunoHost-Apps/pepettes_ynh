@@ -124,7 +124,7 @@ ynh_install_python () {
     if [ -n "$pyenv" ]; then
         ynh_print_info --message="pyenv already seems installed in \`$pyenv'."
         pushd "${pyenv%/*/*}"
-            if git remote -v 2>/dev/null | grep -q pyenv; then
+            if git remote -v 2>/dev/null | grep "https://github.com/pyenv/pyenv.git"; then
                 echo "Trying to update with git..."
                 git pull -q --tags origin master
                 cd ..
@@ -147,7 +147,7 @@ ynh_install_python () {
     if [ -n "$pyenv_virtualenv" ]; then
         ynh_print_info --message="\`pyenv virtualenv' command already available in \`$pyenv_virtualenv'."
         pushd "${pyenv_virtualenv%/*/*}"
-            if git remote -v 2>/dev/null | grep -q pyenv-virtualenv; then
+            if git remote -v 2>/dev/null | grep "https://github.com/pyenv/pyenv-virtualenv.git"; then
                 ynh_print_info --message="Trying to update pyenv-virtualenv with git..."
                 git pull -q origin master
             fi
@@ -162,7 +162,7 @@ ynh_install_python () {
     if [ -n "$pyenv_latest" ]; then
         ynh_print_info --message="\`pyenv latest' command already available in \`$pyenv_latest'."
         pushd "${pyenv_latest%/*/*}"
-            if git remote -v 2>/dev/null | grep -q xxenv-latest; then
+            if git remote -v 2>/dev/null | grep "https://github.com/momo-lab/xxenv-latest.git"; then
                 ynh_print_info --message="Trying to update xxenv-latest with git..."
                 git pull -q origin master
             fi
