@@ -8,7 +8,6 @@
 
 # Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
-source ../settings/scripts/ynh_install_python
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -75,7 +74,6 @@ ynh_script_progression --message="Reinstalling dependencies..." --weight=1
 
 # Define and install dependencies
 ynh_install_app_dependencies $pkg_dependencies
-ynh_install_python --python_version=$PYTHON_VERSION
 
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
@@ -83,10 +81,10 @@ ynh_install_python --python_version=$PYTHON_VERSION
 ynh_script_progression --message="Installing Python dependencies..."
 
 pushd $final_path
-	ynh_use_python
-	$ynh_pip install --upgrade pip
-	$ynh_pip install -r requirements.txt
-	$ynh_pip install gunicorn
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install -r requirements.txt
+	venv/bin/pip install gunicorn
 	mkdir -p /var/log/$app
 	chown -R $app:www-data /var/log/$app
 popd
