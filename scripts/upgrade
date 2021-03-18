@@ -18,10 +18,23 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
+final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+port=$(ynh_app_setting_get --app=$app --key=port)
+
+project_name=$(ynh_app_setting_get --app=$app --key=project_name)
+contact_url=$(ynh_app_setting_get --app=$app --key=contact_url)
+logo=$(ynh_app_setting_get --app=$app --key=logo)
+favicon=$(ynh_app_setting_get --app=$app --key=favicon)
+publishable_key=$(ynh_app_setting_get --app=$app --key=publishable_key)
+secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
+prices=$(ynh_app_setting_get --app=$app --key=prices)
+secret=$(ynh_app_setting_get --app=$app --key=secret)
+csrf_key=$(ynh_app_setting_get --app=$app --key=csrf_key)
 
 #=================================================
 # CHECK VERSION
 #=================================================
+ynh_script_progression --message="Checking version..."
 
 upgrade_type=$(ynh_check_app_version_changed)
 
@@ -51,7 +64,7 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --line_match="Stopped"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -86,13 +99,29 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
+ynh_system_user_create --username=$app --home_dir="$final_path"
 
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# ...
+# UPGRADE PYTHON DEPENDENCIES
 #=================================================
+ynh_script_progression --message="Installing Python dependencies..."
+
+pushd $final_path
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install -r requirements.txt
+	venv/bin/pip install gunicorn
+	mkdir -p /var/log/$app
+	chown -R $app:www-data /var/log/$app
+	cat <<EOF >> wsgi.py 
+from server import app
+
+if __name__ == "__main__":
+    app.run()
+EOF
+popd
 
 #=================================================
 # SETUP SYSTEMD
@@ -105,30 +134,42 @@ ynh_add_systemd_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
+ynh_script_progression --message="Modifying a config file..."
 
+ynh_add_config --template="../conf/gunicorn.py" --destination="$final_path/gunicorn.py"
+ynh_add_config --template="../conf/settings.py" --destination="$final_path/settings.py"
+
+for price in $(echo $prices | sed "s/,/ /"); do
+    frequency=$(echo $price | cut -d/ -f1)
+    currency=$(echo $price | cut -d/ -f2)
+    price_id=$(echo $price | cut -d/ -f3)
+    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$final_path/settings.py"
+done
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
+ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
-chown -R root: $final_path
+chown -R $app:www-data $final_path
+chmod o=--- $final_path
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
-yunohost service add $app --description="A simple donation form" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="A simple donation form" --log_type="systemd"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started"
 
 #=================================================
 # RELOAD NGINX

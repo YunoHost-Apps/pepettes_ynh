@@ -1,11 +1,11 @@
 command = '__FINALPATH__/venv/bin/gunicorn'
 pythonpath = '__FINALPATH__'
 workers = 4
-user = '__NAME__'
+user = '__APP__'
 bind = 'unix:__FINALPATH__/sock'
-pid = '/run/gunicorn/__NAME__-pid'
-errorlog = '/var/log/__NAME__/error.log'
-accesslog = '/var/log/__NAME__/access.log'
+pid = '__FINALPATH__/__APP__-pid'
+errorlog = '/var/log/__APP__/error.log'
+accesslog = '/var/log/__APP__/access.log'
 access_log_format = '%({X-Real-IP}i)s %({X-Forwarded-For}i)s %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 loglevel = 'warning'
 capture_output = True
