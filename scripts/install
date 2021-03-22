@@ -154,6 +154,8 @@ for price in $(echo $prices | sed "s/,/ /"); do
     echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$final_path/settings.py"
 done
 
+ynh_store_file_checksum --file="$final_path/settings.py"
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
