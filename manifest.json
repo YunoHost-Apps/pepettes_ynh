@@ -33,16 +33,6 @@
                 "example": "example.com"
             },
             {
-                "name": "path",
-                "type": "path",
-                "ask": {
-                    "en": "Choose a path for pepettes",
-                    "fr": "Choisissez un chemin pour pepettes"
-                },
-                "example": "/donation",
-                "default": "/donation"
-            },
-            {
                 "name": "is_public",
                 "type": "boolean",
                 "ask": {
