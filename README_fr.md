@@ -19,8 +19,7 @@ Un simple formulaire de don avec stripe
 
 ## Avertissements / informations importantes
 
-* Other infos that people should be aware of, such as:
-    * How to configure this app: During the installation, or in `settings.py` after installation.
+This app may be configured through the `settings.py` after installation.
 
 ## Documentations et ressources
 
