@@ -114,6 +114,7 @@ pushd $final_path
 	venv/bin/pip install gunicorn
 	mkdir -p /var/log/$app
 	chown -R $app:www-data /var/log/$app
+	chmod o-rwx /var/log/$app
 	cat <<EOF >> wsgi.py 
 from server import app
 
