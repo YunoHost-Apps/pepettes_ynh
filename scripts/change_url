@@ -108,8 +108,21 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# UPDATE A CONFIG FILE
 #=================================================
+ynh_script_progression --message="Updating a configuration file..."
+
+ynh_add_config --template="../conf/gunicorn.py" --destination="$final_path/gunicorn.py"
+ynh_add_config --template="../conf/settings.py" --destination="$final_path/settings.py"
+
+for price in $(echo $prices | sed "s/,/ /"); do
+    frequency=$(echo $price | cut -d/ -f1)
+    currency=$(echo $price | cut -d/ -f2)
+    price_id=$(echo $price | cut -d/ -f3)
+    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$final_path/settings.py"
+done
+
+ynh_store_file_checksum --file="$final_path/settings.py"
 
 #=================================================
 # GENERIC FINALISATION
