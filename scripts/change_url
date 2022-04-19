@@ -29,10 +29,16 @@ ynh_script_progression --message="Loading installation settings..." --weight=1
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
-# Add settings here as needed by your application
-#db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#db_user=$db_name
-#db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
+project_name=$(ynh_app_setting_get --app=$app --key=project_name)
+contact_url=$(ynh_app_setting_get --app=$app --key=contact_url)
+logo=$(ynh_app_setting_get --app=$app --key=logo)
+favicon=$(ynh_app_setting_get --app=$app --key=favicon)
+publishable_key=$(ynh_app_setting_get --app=$app --key=publishable_key)
+secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
+prices=$(ynh_app_setting_get --app=$app --key=prices)
+secret=$(ynh_app_setting_get --app=$app --key=secret)
+csrf_key=$(ynh_app_setting_get --app=$app --key=csrf_key)
+domain=$new_domain
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -108,8 +114,21 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# UPDATE A CONFIG FILE
 #=================================================
+ynh_script_progression --message="Updating a configuration file..."
+
+ynh_add_config --template="../conf/gunicorn.py" --destination="$final_path/gunicorn.py"
+ynh_add_config --template="../conf/settings.py" --destination="$final_path/settings.py"
+
+for price in $(echo $prices | sed "s/,/ /"); do
+    frequency=$(echo $price | cut -d/ -f1)
+    currency=$(echo $price | cut -d/ -f2)
+    price_id=$(echo $price | cut -d/ -f3)
+    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$final_path/settings.py"
+done
+
+ynh_store_file_checksum --file="$final_path/settings.py"
 
 #=================================================
 # GENERIC FINALISATION
