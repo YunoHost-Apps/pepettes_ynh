@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Un simple formulaire de don avec stripe
 
-**Version incluse :** 1.0.1~ynh2
+**Version incluse :** 1.0.1~ynh3
 
 **Démo :** https://donate.yunohost.org
 
