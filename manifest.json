@@ -6,7 +6,7 @@
         "en": "A simple donation form with stripe",
         "fr": "Un simple formulaire de don avec stripe"
     },
-    "version": "1.0.1~ynh2",
+    "version": "1.0.1~ynh3",
     "url": "https://github.com/YunoHost/pepettes/",
     "upstream": {
         "license": "MIT",
