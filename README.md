@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Pepettes for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![Working status](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)  
 [![Install Pepettes with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -20,27 +20,27 @@ A simple donation form with stripe
 **Shipped version:** 1.0.1~ynh3
 
 **Demo:** https://donate.yunohost.org
-
 ## Disclaimers / important information
 
 This app may be configured through the `settings.py` after installation.
 
 ## Documentation and resources
 
-* Official admin documentation: https://github.com/YunoHost/pepettes/blob/main/README.md
-* Upstream app code repository: https://github.com/YunoHost/pepettes/
-* YunoHost documentation for this app: https://yunohost.org/app_pepettes
-* Report a bug: https://github.com/YunoHost-Apps/pepettes_ynh/issues
+* Official admin documentation: <https://github.com/YunoHost/pepettes/blob/main/README.md>
+* Upstream app code repository: <https://github.com/YunoHost/pepettes/>
+* YunoHost documentation for this app: <https://yunohost.org/app_pepettes>
+* Report a bug: <https://github.com/YunoHost-Apps/pepettes_ynh/issues>
 
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-```
+
+``` bash
 sudo yunohost app install https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade pepettes -u https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing --debug
 ```
 
-**More info regarding app packaging:** https://yunohost.org/packaging_apps
+**More info regarding app packaging:** <https://yunohost.org/packaging_apps>
