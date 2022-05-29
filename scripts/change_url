@@ -38,6 +38,7 @@ secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
 prices=$(ynh_app_setting_get --app=$app --key=prices)
 secret=$(ynh_app_setting_get --app=$app --key=secret)
 csrf_key=$(ynh_app_setting_get --app=$app --key=csrf_key)
+port=$(ynh_app_setting_get --app=$app --key=port)
 domain=$new_domain
 
 #=================================================
