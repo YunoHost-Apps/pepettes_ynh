@@ -131,6 +131,10 @@ done
 
 ynh_store_file_checksum --file="$final_path/settings.py"
 
+# Set permissions to app files
+chown -R $app:www-data $final_path
+chmod o=--- $final_path
+
 #=================================================
 # GENERIC FINALISATION
 #=================================================
