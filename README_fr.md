@@ -16,15 +16,11 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 ## Vue d’ensemble
 
-Un simple formulaire de don avec stripe
+A simple donation form with stripe
 
 **Version incluse :** 1.0.1~ynh3
 
 **Démo :** https://donate.yunohost.org
-## Avertissements / informations importantes
-
-This app may be configured through the `settings.py` after installation.
-
 ## Documentations et ressources
 
 * Documentation officielle de l’admin : <https://github.com/YunoHost/pepettes/blob/main/README.md>
