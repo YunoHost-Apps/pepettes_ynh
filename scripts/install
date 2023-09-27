@@ -43,14 +43,6 @@ chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
 #=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=1
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-#=================================================
 # SPECIFIC SETUP
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
@@ -95,8 +87,13 @@ ynh_store_file_checksum --file="$install_dir/settings.py"
 #=================================================
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
 # Create a dedicated systemd config
 ynh_add_systemd_config
+
+yunohost service add $app --description="A simple donation form"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -108,13 +105,6 @@ ynh_script_progression --message="Securing files and directories..."
 # Set permissions to app files
 chown -R $app:www-data $install_dir
 chmod o=--- $install_dir
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
-
-yunohost service add $app --description="A simple donation form"
 
 #=================================================
 # START SYSTEMD SERVICE
