@@ -10,52 +10,17 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-#REMOVEME? ynh_clean_setup () {
-	true
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-#=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
-path="/"
-#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
-#REMOVEME? project_name=$YNH_APP_ARG_PROJECT_NAME
-#REMOVEME? contact_url=$YNH_APP_ARG_CONTACT_URL
-#REMOVEME? logo=$YNH_APP_ARG_LOGO
-#REMOVEME? favicon=$YNH_APP_ARG_FAVICON
-#REMOVEME? publishable_key=$YNH_APP_ARG_PUBLISHABLE_KEY
-#REMOVEME? secret_key=$YNH_APP_ARG_SECRET_KEY
-#REMOVEME? prices=$YNH_APP_ARG_PRICES
 secret=$(ynh_string_random --length=50)
 csrf_key=$(ynh_string_random --length=50)
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#=================================================
-# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
-#=================================================
-#REMOVEME? ynh_script_progression --message="Validating installation parameters..." --weight=1
-
-#REMOVEME? install_dir=/var/www/$app
-#REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
-
-# Register (book) web path
-#REMOVEME? ynh_webpath_register --app=$app --domain=$domain --path=$path
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
-#REMOVEME? ynh_script_progression --message="Storing installation settings..." --weight=1
+ynh_script_progression --message="Storing installation settings..." --weight=1
 
-#REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
-#REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
 ynh_app_setting_set --app=$app --key=project_name --value=$project_name
 ynh_app_setting_set --app=$app --key=contact_url --value=$contact_url
 ynh_app_setting_set --app=$app --key=logo --value=$logo
@@ -67,41 +32,13 @@ ynh_app_setting_set --app=$app --key=secret --value=$secret
 ynh_app_setting_set --app=$app --key=csrf_key --value=$csrf_key
 
 #=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# FIND AND OPEN A PORT
-#=================================================
-#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=1
-
-# Find an available port
-#REMOVEME? port=$(ynh_find_port --port=8102)
-#REMOVEME? ynh_app_setting_set --app=$app --key=port --value=$port
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Installing dependencies..." --weight=1
-
-#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=1
-
-# Create a system user
-#REMOVEME? ynh_system_user_create --username=$app --home_dir=$install_dir
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=1
 
-#REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir"
 
-chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:www-data "$install_dir"
 
@@ -118,7 +55,7 @@ ynh_add_nginx_config
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Installing Python dependencies..."
+ynh_script_progression --message="Installing Python dependencies..."
 
 pushd $install_dir
 	python3 -m venv venv
@@ -186,27 +123,6 @@ ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started"
-
-#=================================================
-# SETUP SSOWAT
-#=================================================
-#REMOVEME? ynh_script_progression --message="Configuring permissions..." --weight=1
-
-# Make app public if necessary
-#REMOVEME? if [ $is_public -eq 1 ]
-then
-	# Everyone can access the app.
-	# The "main" permission is automatically created before the install script.
-#REMOVEME? 	ynh_permission_update --permission="main" --add="visitors"
-fi
-
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
