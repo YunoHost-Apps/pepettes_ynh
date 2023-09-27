@@ -12,24 +12,24 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
+#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-port=$(ynh_app_setting_get --app=$app --key=port)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
+#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
 
-project_name=$(ynh_app_setting_get --app=$app --key=project_name)
-contact_url=$(ynh_app_setting_get --app=$app --key=contact_url)
-logo=$(ynh_app_setting_get --app=$app --key=logo)
-favicon=$(ynh_app_setting_get --app=$app --key=favicon)
-publishable_key=$(ynh_app_setting_get --app=$app --key=publishable_key)
-secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
-prices=$(ynh_app_setting_get --app=$app --key=prices)
-secret=$(ynh_app_setting_get --app=$app --key=secret)
-csrf_key=$(ynh_app_setting_get --app=$app --key=csrf_key)
+#REMOVEME? project_name=$(ynh_app_setting_get --app=$app --key=project_name)
+#REMOVEME? contact_url=$(ynh_app_setting_get --app=$app --key=contact_url)
+#REMOVEME? logo=$(ynh_app_setting_get --app=$app --key=logo)
+#REMOVEME? favicon=$(ynh_app_setting_get --app=$app --key=favicon)
+#REMOVEME? publishable_key=$(ynh_app_setting_get --app=$app --key=publishable_key)
+#REMOVEME? secret_key=$(ynh_app_setting_get --app=$app --key=secret_key)
+#REMOVEME? prices=$(ynh_app_setting_get --app=$app --key=prices)
+#REMOVEME? secret=$(ynh_app_setting_get --app=$app --key=secret)
+#REMOVEME? csrf_key=$(ynh_app_setting_get --app=$app --key=csrf_key)
 
 #=================================================
 # CHECK VERSION
@@ -41,16 +41,16 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
+#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
 # Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
+#REMOVEME? ynh_backup_before_upgrade
+#REMOVEME? ynh_clean_setup () {
 	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
+#REMOVEME? 	ynh_restore_upgradebackup
 }
 # Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
+#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -64,10 +64,10 @@ ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd" --li
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
+#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
 
 # Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir=$final_path
+#REMOVEME? ynh_system_user_create --username=$app --home_dir=$install_dir
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -78,12 +78,12 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path"
+	ynh_setup_source --dest_dir="$install_dir"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:www-data "$install_dir"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -96,18 +96,18 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=1
+#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=1
 
-ynh_install_app_dependencies $pkg_dependencies
+#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
 # UPGRADE PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Python dependencies..."
+#REMOVEME? ynh_script_progression --message="Installing Python dependencies..."
 
-pushd $final_path
+pushd $install_dir
 	python3 -m venv venv
 	venv/bin/pip install --upgrade pip
 	venv/bin/pip install -r requirements.txt
@@ -128,17 +128,17 @@ popd
 #=================================================
 ynh_script_progression --message="Updating a configuration file..."
 
-ynh_add_config --template="../conf/gunicorn.py" --destination="$final_path/gunicorn.py"
-ynh_add_config --template="../conf/settings.py" --destination="$final_path/settings.py"
+ynh_add_config --template="../conf/gunicorn.py" --destination="$install_dir/gunicorn.py"
+ynh_add_config --template="../conf/settings.py" --destination="$install_dir/settings.py"
 
 for price in $(echo $prices | sed "s/,/ /"); do
     frequency=$(echo $price | cut -d/ -f1)
     currency=$(echo $price | cut -d/ -f2)
     price_id=$(echo $price | cut -d/ -f3)
-    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$final_path/settings.py"
+    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$install_dir/settings.py"
 done
 
-ynh_store_file_checksum --file="$final_path/settings.py"
+ynh_store_file_checksum --file="$install_dir/settings.py"
 
 #=================================================
 # SETUP SYSTEMD
@@ -156,8 +156,8 @@ ynh_add_systemd_config
 ynh_script_progression --message="Securing files and directories..."
 
 # Set permissions on app files
-chown -R $app:www-data $final_path
-chmod o=--- $final_path
+chown -R $app:www-data $install_dir
+chmod o=--- $install_dir
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -176,9 +176,9 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --l
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
+#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
-ynh_systemd_action --service_name=nginx --action=reload
+#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
