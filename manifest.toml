@@ -34,7 +34,7 @@ ram.runtime = "50M"
     default = "visitors"
 
     [install.project_name]
-    ask.en = "What's the name of the project which will received donation ?"
+    ask.en = "What's the name of the project which will received donation?"
     ask.fr = "Quel est le nom du projet qui va recevoir les dons ?"
     type = "string"
     default = ""

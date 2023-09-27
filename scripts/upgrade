@@ -51,6 +51,7 @@ pushd $install_dir
 	venv/bin/pip install --upgrade pip
 	venv/bin/pip install -r requirements.txt
 	venv/bin/pip install gunicorn
+	venv/bin/pybabel compile -d locales/
 	mkdir -p /var/log/$app
 	chown -R $app:www-data /var/log/$app
 	chmod o-rwx /var/log/$app
