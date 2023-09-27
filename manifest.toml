@@ -2,10 +2,10 @@ packaging_format = 2
 
 id = "pepettes"
 name = "Pepettes"
-description.en = "A simple donation form with stripe"
-description.fr = "Un simple formulaire de don avec stripe"
+description.en = "Simple donation form with stripe"
+description.fr = "Simple formulaire de don avec stripe"
 
-version = "1.0.1~ynh3"
+version = "1.0.1~ynh4"
 
 maintainers = ["ljf"]
 
