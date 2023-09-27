@@ -5,15 +5,16 @@ It shall NOT be edited by hand.
 
 # Pepettes pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+
 [![Installer Pepettes avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Pepettes rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Pepettes rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Un simple formulaire de don avec stripe
 
@@ -26,8 +27,8 @@ This app may be configured through the `settings.py` after installation.
 
 ## Documentations et ressources
 
-* Documentation officielle de l'admin : <https://github.com/YunoHost/pepettes/blob/main/README.md>
-* Dépôt de code officiel de l'app : <https://github.com/YunoHost/pepettes/>
+* Documentation officielle de l’admin : <https://github.com/YunoHost/pepettes/blob/main/README.md>
+* Dépôt de code officiel de l’app : <https://github.com/YunoHost/pepettes/>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_pepettes>
 * Signaler un bug : <https://github.com/YunoHost-Apps/pepettes_ynh/issues>
 
@@ -43,4 +44,4 @@ ou
 sudo yunohost app upgrade pepettes -u https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
