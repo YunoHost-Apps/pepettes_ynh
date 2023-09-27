@@ -21,10 +21,6 @@ A simple donation form with stripe
 **Shipped version:** 1.0.1~ynh3
 
 **Demo:** https://donate.yunohost.org
-## Disclaimers / important information
-
-This app may be configured through the `settings.py` after installation.
-
 ## Documentation and resources
 
 * Official admin documentation: <https://github.com/YunoHost/pepettes/blob/main/README.md>
