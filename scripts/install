@@ -21,13 +21,6 @@ csrf_key=$(ynh_string_random --length=50)
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=1
 
-ynh_app_setting_set --app=$app --key=project_name --value=$project_name
-ynh_app_setting_set --app=$app --key=contact_url --value=$contact_url
-ynh_app_setting_set --app=$app --key=logo --value=$logo
-ynh_app_setting_set --app=$app --key=favicon --value=$favicon
-ynh_app_setting_set --app=$app --key=publishable_key --value=$publishable_key
-ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
-ynh_app_setting_set --app=$app --key=prices --value=$prices
 ynh_app_setting_set --app=$app --key=secret --value=$secret
 ynh_app_setting_set --app=$app --key=csrf_key --value=$csrf_key
 
@@ -47,7 +40,7 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Python dependencies..."
+ynh_script_progression --message="Installing Python dependencies..." --weight=1
 
 pushd $install_dir
 	python3 -m venv venv
@@ -69,7 +62,7 @@ popd
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..."
+ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 ynh_add_config --template="../conf/gunicorn.py" --destination="$install_dir/gunicorn.py"
 ynh_add_config --template="../conf/settings.py" --destination="$install_dir/settings.py"
@@ -94,14 +87,14 @@ ynh_add_nginx_config
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
-yunohost service add $app --description="A simple donation form"
+yunohost service add $app --description="Simple donation form" --log="/var/log/$app/$app.log"
 
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SECURE FILES AND DIRECTORIES
 #=================================================
-ynh_script_progression --message="Securing files and directories..."
+ynh_script_progression --message="Securing files and directories..." --weight=1
 
 # Set permissions to app files
 chown -R $app:www-data $install_dir

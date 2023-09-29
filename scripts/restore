@@ -23,7 +23,7 @@ chown -R $app:www-data "$install_dir"
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Installing Python dependencies..."
+ynh_script_progression --message="Installing Python dependencies..." --weight=1
 
 pushd $install_dir
 	python3 -m venv venv
@@ -39,7 +39,7 @@ popd
 #=================================================
 # RESTORE USER RIGHTS
 #=================================================
-ynh_script_progression --message="Restoring user rights..."
+ynh_script_progression --message="Restoring user rights..." --weight=1
 
 # Restore permissions on app files
 chown -R $app:www-data $install_dir
@@ -55,12 +55,14 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
-yunohost service add $app --description="A simple donation form"
+yunohost service add $app --description="Simple donation form" --log="/var/log/$app/$app.log"
 
 #=================================================
-# START SYSTEMD SERVICE
+# GENERIC FINALIZATION
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+# RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
+#=================================================
+ynh_script_progression --message="Reloading NGINX web server and $app's service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="systemd" --line_match="Started"
 
