@@ -25,7 +25,6 @@ A simple donation form with stripe
 
 * Documentation officielle de l’admin : <https://github.com/YunoHost/pepettes/blob/main/README.md>
 * Dépôt de code officiel de l’app : <https://github.com/YunoHost/pepettes/>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_pepettes>
 * Signaler un bug : <https://github.com/YunoHost-Apps/pepettes_ynh/issues>
 
 ## Informations pour les développeurs
