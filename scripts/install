@@ -21,13 +21,6 @@ csrf_key=$(ynh_string_random --length=50)
 #=================================================
 ynh_script_progression --message="Storing installation settings..." --weight=1
 
-ynh_app_setting_set --app=$app --key=project_name --value=$project_name
-ynh_app_setting_set --app=$app --key=contact_url --value=$contact_url
-ynh_app_setting_set --app=$app --key=logo --value=$logo
-ynh_app_setting_set --app=$app --key=favicon --value=$favicon
-ynh_app_setting_set --app=$app --key=publishable_key --value=$publishable_key
-ynh_app_setting_set --app=$app --key=secret_key --value=$secret_key
-ynh_app_setting_set --app=$app --key=prices --value=$prices
 ynh_app_setting_set --app=$app --key=secret --value=$secret
 ynh_app_setting_set --app=$app --key=csrf_key --value=$csrf_key
 
