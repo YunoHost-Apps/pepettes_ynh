@@ -1,0 +1,95 @@
+packaging_format = 2
+
+id = "pepettes"
+name = "Pepettes"
+description.en = "Simple donation form with stripe"
+description.fr = "Simple formulaire de don avec stripe"
+
+version = "1.0.1~ynh5"
+
+maintainers = ["ljf"]
+
+[upstream]
+license = "MIT"
+demo = "https://donate.yunohost.org"
+admindoc = "https://github.com/YunoHost/pepettes/blob/main/README.md"
+code = "https://github.com/YunoHost/pepettes/"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = true
+ldap = false
+sso = false
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+    [install.project_name]
+    ask.en = "What's the name of the project which will received donation?"
+    ask.fr = "Quel est le nom du projet qui va recevoir les dons ?"
+    type = "string"
+    default = ""
+
+    [install.contact_url]
+    ask.en = "Indicate a link to contact you to ask for stopping recuring payment"
+    ask.fr = "Indiquez un lien pour vous contacter pour arréter les paiements récurrents"
+    type = "string"
+    default = ""
+
+    [install.logo]
+    ask.en = "A link to the logo of your project"
+    ask.fr = "Un lien vers le logo de votre projet"
+    type = "string"
+    default = ""
+
+    [install.favicon]
+    ask.en = "A link to the favicon of your project"
+    ask.fr = "Un lien vers la favicon de votre projet"
+    type = "string"
+    default = ""
+
+    [install.publishable_key]
+    ask.en = "Indicate here the stripe publishable key"
+    ask.fr = "Indiquez ici la clé publique stripe"
+    type = "string"
+    default = ""
+
+    [install.secret_key]
+    ask.en = "Indicate here the stripe secret key"
+    ask.fr = "Indiquez ici la clé secrète stripe"
+    type = "string"
+    default = ""
+
+    [install.prices]
+    ask.en = "Indicates here the prices ID of donation products you created in stripe interfaces"
+    ask.fr = "Indiquez ici les ID de prix des produits de don stripe que vous avez créé dans l'interface stripe"
+    help.en = "Go on https://dashboard.stripe.com/products to create those donation products"
+    help.fr = "Allez sur https://dashboard.stripe.com/products pour créer ces produits de dons"
+    type = "string"
+    default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV"
+
+[resources]
+        [resources.sources.main]
+        url = "https://github.com/YunoHost/pepettes/archive/v1.0.1.tar.gz"
+        sha256 = "9792ed5589d4a55bd619edc7aa61a1a78f34c5a4e7095b2292ac09b66c8b9a58"
+
+    [resources.ports]
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = "python3-venv, python3-dev, python3-pip"

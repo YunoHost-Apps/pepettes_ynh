@@ -1,0 +1,21 @@
+test_format = 1.0
+
+[default]
+
+    # -------------------------------
+    # Default args to use for install
+    # -------------------------------
+
+    args.project_name="YunoHost"
+    args.contact_url="https://forum.yunohost.org/t/donate-to-yunohost/9211"
+    args.logo="https://yunohost.org/user/images/logo.png"
+    args.favicon="https://yunohost.org/user/themes/yunohost-docs/images/favicon.png"
+    args.publishable_key="pk_test_gOgGjacs9YfvDJY03BRZ576O"
+    args.secret_key="sk_test_aaaaaaaaaaaaaaaaa"
+    args.prices="one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV"
+
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
+
+    test_upgrade_from.5cc2d3ffd6529cc7356ff93af92dbb6785c3ab9a.name = "Upgrade from 1.0.1~ynh1"
