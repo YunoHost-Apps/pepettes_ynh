@@ -81,6 +81,7 @@ ram.runtime = "50M"
         [resources.sources.main]
         url = "https://github.com/YunoHost/pepettes/archive/v1.0.1.tar.gz"
         sha256 = "9792ed5589d4a55bd619edc7aa61a1a78f34c5a4e7095b2292ac09b66c8b9a58"
+        autoupdate.strategy = "latest_github_release"
 
     [resources.ports]
 
