@@ -18,7 +18,7 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 A simple donation form with stripe
 
-**Version incluse :** 1.0.1~ynh5
+**Version incluse :** 1.0.1~ynh6
 
 **Démo :** https://donate.yunohost.org
 ## Documentations et ressources
