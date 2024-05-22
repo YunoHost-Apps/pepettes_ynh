@@ -18,7 +18,7 @@ Il NE doit PAS être modifié à la main.
 
 A simple donation form with stripe
 
-**Version incluse :** 1.0.1~ynh6
+**Version incluse :** 1.1.1~ynh1
 
 **Démo :** <https://donate.yunohost.org>
 ## Documentations et ressources
