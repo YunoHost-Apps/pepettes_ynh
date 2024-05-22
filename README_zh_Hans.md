@@ -18,7 +18,7 @@
 
 A simple donation form with stripe
 
-**分发版本：** 1.0.1~ynh6
+**分发版本：** 1.1.1~ynh1
 
 **演示：** <https://donate.yunohost.org>
 ## 文档与资源
