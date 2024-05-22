@@ -75,7 +75,7 @@ ram.runtime = "50M"
     help.en = "Go on https://dashboard.stripe.com/products to create those donation products"
     help.fr = "Allez sur https://dashboard.stripe.com/products pour créer ces produits de dons"
     type = "string"
-    default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV"
+    default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV,one_time/USD/price_1IKuPV,recuring/USD/price_1IKuPV"
 
 [resources]
         [resources.sources.main]
