@@ -71,7 +71,7 @@ ynh_script_progression --message="Updating a configuration file..." --weight=1
 ynh_add_config --template="../conf/gunicorn.py" --destination="$install_dir/gunicorn.py"
 ynh_add_config --template="../conf/settings.py" --destination="$install_dir/settings.py"
 
-for price in $(echo $prices | sed "s/,/ /"); do
+for price in $(echo $prices | sed "s/,/ /g"); do
     frequency=$(echo $price | cut -d/ -f1)
     currency=$(echo $price | cut -d/ -f2)
     price_id=$(echo $price | cut -d/ -f3)
