@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Pepettes
 
-[![集成程度](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![工作状态](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
 
 [![使用 YunoHost 安装 Pepettes](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 

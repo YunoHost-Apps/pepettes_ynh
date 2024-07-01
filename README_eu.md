@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Pepettes YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
 
 [![Instalatu Pepettes YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 

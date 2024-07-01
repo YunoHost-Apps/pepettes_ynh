@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Pepettes para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/pepettes.svg)](https://dash.yunohost.org/appci/app/pepettes) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
 
 [![Instalar Pepettes con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
