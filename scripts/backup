@@ -35,6 +35,8 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
 
+ynh_backup --src_path="/etc/cron.daily/warn-about-attacks-on-donation"
+
 #=================================================
 # END OF SCRIPT
 #=================================================

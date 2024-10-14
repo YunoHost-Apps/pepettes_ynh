@@ -57,6 +57,11 @@ systemctl enable $app.service --quiet
 
 yunohost service add $app --description="Simple donation form" --log="/var/log/$app/$app.log"
 
+cron_path="/etc/cron.daily/warn-about-attacks-on-donation"
+ynh_restore_file --origin_path="$cron_path"
+chown root: "$cron_path"
+chmod 644 "$cron_path"
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================

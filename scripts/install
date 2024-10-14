@@ -51,7 +51,7 @@ pushd $install_dir
 	mkdir -p /var/log/$app
 	chown -R $app:www-data /var/log/$app
 	chmod o-rwx /var/log/$app
-	cat <<EOF >> wsgi.py 
+	cat <<EOF >> wsgi.py
 from server import app
 
 if __name__ == "__main__":
@@ -88,6 +88,12 @@ ynh_add_nginx_config
 ynh_add_systemd_config
 
 yunohost service add $app --description="Simple donation form" --log="/var/log/$app/$app.log"
+
+# Add cron job
+cron_path="/etc/cron.daily/warn-about-attacks-on-donation"
+ynh_add_config --template="warn-about-attacks-on-donation.sh" --destination="$cron_path"
+chown root: "$cron_path"
+chmod 644 "$cron_path"
 
 #=================================================
 # GENERIC FINALIZATION
