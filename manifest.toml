@@ -7,7 +7,7 @@ name = "Pepettes"
 description.en = "Simple donation form with stripe"
 description.fr = "Simple formulaire de don avec stripe"
 
-version = "1.1.1~ynh2"
+version = "1.2~ynh1"
 
 maintainers = ["ljf"]
 
@@ -81,8 +81,8 @@ ram.runtime = "50M"
 
 [resources]
     [resources.sources.main]
-    url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.1.1.tar.gz"
-    sha256 = "bbdc2f64afc7597b4a66d2ec3bfe87324f482ffe4681766c79b9938415c366f5"
+    url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.2.tar.gz"
+    sha256 = "eed171d58451c890a25876d937bbe5ddcdea48e7525bdc7dccbbddf7aadd7736"
     autoupdate.strategy = "latest_github_release"
 
     [resources.ports]
