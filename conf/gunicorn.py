@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 command = "__INSTALL_DIR__/venv/bin/gunicorn"
-pythonpath = "__INSTALL_DIR__"
+pythonpath = "__INSTALL_DIR__/sources"
 workers = 4
 user = "__APP__"
 bind = "unix:__INSTALL_DIR__/sock"

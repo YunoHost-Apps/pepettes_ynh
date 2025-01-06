@@ -1,121 +1,69 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
+ynh_script_progression "Setting secret keys..."
 
 secret=$(ynh_string_random --length=50)
 csrf_key=$(ynh_string_random --length=50)
-
-#=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-ynh_script_progression --message="Storing installation settings..." --weight=1
-
-ynh_app_setting_set --app=$app --key=secret --value=$secret
-ynh_app_setting_set --app=$app --key=csrf_key --value=$csrf_key
+ynh_app_setting_set --key="secret" --value="$secret"
+ynh_app_setting_set --key="csrf_key" --value="$csrf_key"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=1
+ynh_script_progression "Setting up source files..."
 
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir"
-
-chmod -R o-rwx "$install_dir"
-chown -R $app:www-data "$install_dir"
-
-#=================================================
-# SPECIFIC SETUP
-#=================================================
-# INSTALL PYTHON DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Installing Python dependencies..." --weight=1
-
-pushd $install_dir
-	python3 -m venv venv
-	venv/bin/pip install --upgrade pip
-	venv/bin/pip install -r requirements.txt
-	venv/bin/pip install gunicorn
-	ynh_exec_warn_less venv/bin/pybabel compile -d locales/
-	mkdir -p /var/log/$app
-	chown -R $app:www-data /var/log/$app
-	chmod o-rwx /var/log/$app
-	cat <<EOF >> wsgi.py
-from server import app
-
-if __name__ == "__main__":
-    app.run()
-EOF
-popd
+ynh_setup_source --dest_dir="$install_dir/sources"
+chown -R "$app:www-data" "$install_dir"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --weight=1
+ynh_script_progression "Adding $app's configuration..."
 
-ynh_add_config --template="../conf/gunicorn.py" --destination="$install_dir/gunicorn.py"
-ynh_add_config --template="../conf/settings.py" --destination="$install_dir/settings.py"
+ynh_config_add --template="gunicorn.py" --destination="$install_dir/sources/gunicorn.py"
+ynh_config_add --template="settings.py" --destination="$install_dir/sources/settings.py"
+ynh_config_add --template="wsgi.py" --destination="$install_dir/sources/wsgi.py"
 
-for price in $(echo $prices | sed "s/,/ /g"); do
-    frequency=$(echo $price | cut -d/ -f1)
-    currency=$(echo $price | cut -d/ -f2)
-    price_id=$(echo $price | cut -d/ -f3)
-    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$install_dir/settings.py"
-done
-
-ynh_store_file_checksum --file="$install_dir/settings.py"
+print_price_ids >> "$install_dir/sources/settings.py"
+ynh_store_file_checksum "$install_dir/sources/settings.py"
+chown -R "$app:$app" "$install_dir/sources/gunicorn.py" "$install_dir/sources/settings.py" "$install_dir/sources/wsgi.py"
 
 #=================================================
-# SETUP SYSTEMD
+# INSTALL PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --weight=1
+ynh_script_progression "Installing Python dependencies..."
 
-# Create a dedicated NGINX config
-ynh_add_nginx_config
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
-
-yunohost service add $app --description="Simple donation form" --log="/var/log/$app/$app.log"
-
-# Add cron job
-cron_path="/etc/cron.daily/warn-about-attacks-on-donation"
-ynh_add_config --template="warn-about-attacks-on-donation.sh" --destination="$cron_path"
-chown root: "$cron_path"
-chmod 644 "$cron_path"
+build_python
 
 #=================================================
-# GENERIC FINALIZATION
+# SYSTEM CONFIGURATION
 #=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-ynh_script_progression --message="Securing files and directories..." --weight=1
+ynh_script_progression "Adding system configurations related to $app..."
 
-# Set permissions to app files
-chown -R $app:www-data $install_dir
-chmod o=--- $install_dir
+ynh_config_add_nginx
+
+ynh_config_add_systemd
+yunohost service add "$app" --description="Simple donation form" --log="/var/log/$app/$app.log"
+
+ynh_config_add_logrotate
+
+ynh_config_add --template="warn-about-attacks-on-donation.sh" --destination="$cron_path"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"
+ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
