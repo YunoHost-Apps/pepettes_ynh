@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "pepettes"
@@ -78,10 +80,10 @@ ram.runtime = "50M"
     default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV,one_time/USD/price_1IKuPV,recuring/USD/price_1IKuPV"
 
 [resources]
-        [resources.sources.main]
-        url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.1.1.tar.gz"
-        sha256 = "bbdc2f64afc7597b4a66d2ec3bfe87324f482ffe4681766c79b9938415c366f5"
-        autoupdate.strategy = "latest_github_release"
+    [resources.sources.main]
+    url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.1.1.tar.gz"
+    sha256 = "bbdc2f64afc7597b4a66d2ec3bfe87324f482ffe4681766c79b9938415c366f5"
+    autoupdate.strategy = "latest_github_release"
 
     [resources.ports]
 
