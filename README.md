@@ -5,7 +5,9 @@ It shall NOT be edited by hand.
 
 # Pepettes for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![Working status](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![Integration level](https://apps.yunohost.org/badge/integration/pepettes)](https://ci-apps.yunohost.org/ci/apps/pepettes/)
+![Working status](https://apps.yunohost.org/badge/state/pepettes)
+![Maintenance status](https://apps.yunohost.org/badge/maintained/pepettes)
 
 [![Install Pepettes with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
@@ -18,7 +20,7 @@ It shall NOT be edited by hand.
 
 A simple donation form with stripe
 
-**Shipped version:** 1.1.1~ynh2
+**Shipped version:** 1.2~ynh1
 
 **Demo:** <https://donate.yunohost.org>
 ## Documentation and resources

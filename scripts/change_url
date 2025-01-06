@@ -1,65 +1,43 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC STARTING
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD MODIFICATIONS
-#=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="systemd"
+ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..." --weight=1
+ynh_script_progression "Updating NGINX web server configuration..."
 
-ynh_change_url_nginx_config
+ynh_config_change_url_nginx
 
-#=================================================
-# SPECIFIC MODIFICATIONS
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..."
+ynh_script_progression "Updating configuration..."
 
-ynh_add_config --template="../conf/gunicorn.py" --destination="$install_dir/gunicorn.py"
-ynh_add_config --template="../conf/settings.py" --destination="$install_dir/settings.py"
+ynh_config_add --template="gunicorn.py" --destination="$install_dir/sources/gunicorn.py"
+ynh_config_add --template="settings.py" --destination="$install_dir/sources/settings.py"
 
-for price in $(echo $prices | sed "s/,/ /"); do
-    frequency=$(echo $price | cut -d/ -f1)
-    currency=$(echo $price | cut -d/ -f2)
-    price_id=$(echo $price | cut -d/ -f3)
-    echo "DONATION['$frequency']['$currency'] = '$price_id'" >> "$install_dir/settings.py"
-done
+print_price_ids >> "$install_dir/sources/settings.py"
+ynh_store_file_checksum "$install_dir/sources/settings.py"
+chown -R "$app:$app" "$install_dir/sources/gunicorn.py" "$install_dir/sources/settings.py"
 
-ynh_store_file_checksum --file="$install_dir/settings.py"
-
-# Set permissions to app files
-chown -R $app:www-data $install_dir
-chmod o=--- $install_dir
-
-#=================================================
-# GENERIC FINALISATION
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="systemd"
+ynh_systemctl --service="$app" --action="start" --log_path="systemd"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app" --last
+ynh_script_progression "Change of URL completed for $app"

@@ -1,3 +1,5 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
 packaging_format = 2
 
 id = "pepettes"
@@ -5,7 +7,7 @@ name = "Pepettes"
 description.en = "Simple donation form with stripe"
 description.fr = "Simple formulaire de don avec stripe"
 
-version = "1.1.1~ynh2"
+version = "1.2~ynh1"
 
 maintainers = ["ljf"]
 
@@ -16,7 +18,8 @@ admindoc = "https://github.com/YunoHost/pepettes/blob/main/README.md"
 code = "https://github.com/YunoHost/pepettes/"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 11.2.18"
+helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
 ldap = false
@@ -78,10 +81,10 @@ ram.runtime = "50M"
     default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV,one_time/USD/price_1IKuPV,recuring/USD/price_1IKuPV"
 
 [resources]
-        [resources.sources.main]
-        url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.1.1.tar.gz"
-        sha256 = "bbdc2f64afc7597b4a66d2ec3bfe87324f482ffe4681766c79b9938415c366f5"
-        autoupdate.strategy = "latest_github_release"
+    [resources.sources.main]
+    url = "https://github.com/YunoHost/pepettes/archive/refs/tags/v1.2.tar.gz"
+    sha256 = "eed171d58451c890a25876d937bbe5ddcdea48e7525bdc7dccbbddf7aadd7736"
+    autoupdate.strategy = "latest_github_release"
 
     [resources.ports]
 
@@ -93,4 +96,8 @@ ram.runtime = "50M"
     main.url = "/"
 
     [resources.apt]
-    packages = "python3-venv, python3-dev, python3-pip"
+    packages = [
+        "python3-venv",
+        "python3-dev",
+        "python3-pip",
+    ]

@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Pepettes YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/pepettes)](https://ci-apps.yunohost.org/ci/apps/pepettes/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/pepettes)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/pepettes)
 
 [![Instalatu Pepettes YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
@@ -18,7 +20,7 @@ EZ editatu eskuz.
 
 A simple donation form with stripe
 
-**Paketatutako bertsioa:** 1.1.1~ynh2
+**Paketatutako bertsioa:** 1.2~ynh1
 
 **Demoa:** <https://donate.yunohost.org>
 ## Dokumentazioa eta baliabideak
