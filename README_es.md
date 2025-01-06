@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # Pepettes para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/pepettes)](https://ci-apps.yunohost.org/ci/apps/pepettes/)
+![Estado funcional](https://apps.yunohost.org/badge/state/pepettes)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/pepettes)
 
 [![Instalar Pepettes con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
@@ -18,7 +20,7 @@ No se debe editar a mano.
 
 A simple donation form with stripe
 
-**Versión actual:** 1.1.1~ynh2
+**Versión actual:** 1.2~ynh1
 
 **Demo:** <https://donate.yunohost.org>
 ## Documentaciones y recursos
@@ -30,7 +32,7 @@ A simple donation form with stripe
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

@@ -5,7 +5,9 @@
 
 # YunoHost 上的 Pepettes
 
-[![集成程度](https://dash.yunohost.org/integration/pepettes.svg)](https://ci-apps.yunohost.org/ci/apps/pepettes/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/pepettes.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/pepettes.maintain.svg)
+[![集成程度](https://apps.yunohost.org/badge/integration/pepettes)](https://ci-apps.yunohost.org/ci/apps/pepettes/)
+![工作状态](https://apps.yunohost.org/badge/state/pepettes)
+![维护状态](https://apps.yunohost.org/badge/maintained/pepettes)
 
 [![使用 YunoHost 安装 Pepettes](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=pepettes)
 
@@ -18,7 +20,7 @@
 
 A simple donation form with stripe
 
-**分发版本：** 1.1.1~ynh2
+**分发版本：** 1.2~ynh1
 
 **演示：** <https://donate.yunohost.org>
 ## 文档与资源
