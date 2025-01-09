@@ -45,7 +45,7 @@ ynh_script_progression "Upgrading systemd configuration..."
 ynh_config_add_nginx
 
 ynh_config_add_systemd
-yunohost service add "$app" --description="Simple donation form" --log="/var/log/$app/$app.log"
+yunohost service add "$app" --description="Simple donation form" --log="/var/log/$app/error.log"
 
 ynh_config_add_logrotate
 
