@@ -20,7 +20,7 @@ Ini TIDAK boleh diedit dengan tangan.
 
 A simple donation form with stripe
 
-**Versi terkirim:** 1.2~ynh1
+**Versi terkirim:** 1.3~ynh1
 
 **Demo:** <https://donate.yunohost.org>
 ## Dokumentasi dan sumber daya
