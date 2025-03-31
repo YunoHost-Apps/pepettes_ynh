@@ -11,6 +11,7 @@ BABEL_TRANSLATION_DIRECTORIES = "locales"
 # Customization
 CUSTOM = {
     "name": "__PROJECT_NAME__",
+    "portal_url": "__PORTAL_URL__",
     "contact_url": "__CONTACT_URL__",
     "logo": "__LOGO__",
     "favicon": "__FAVICON__",

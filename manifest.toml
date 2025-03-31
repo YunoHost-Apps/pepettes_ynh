@@ -43,8 +43,8 @@ ram.runtime = "50M"
     default = ""
 
     [install.contact_url]
-    ask.en = "Indicate a link to contact you to ask for stopping recuring payment"
-    ask.fr = "Indiquez un lien pour vous contacter pour arréter les paiements récurrents"
+    ask.en = "Indicate a link to contact you"
+    ask.fr = "Indiquez un lien pour vous contacter"
     type = "string"
     default = ""
 
@@ -79,6 +79,15 @@ ram.runtime = "50M"
     help.fr = "Allez sur https://dashboard.stripe.com/products pour créer ces produits de dons"
     type = "string"
     default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV,one_time/USD/price_1IKuPV,recuring/USD/price_1IKuPV"
+
+    [install.portal_url]
+    ask.en = "Indicate a Stripe portal link"
+    ask.fr = "Indiquez un lien vers le portail Stripe"
+    help.en = "activate the portal on https://dashboard.stripe.com/settings/billing/portal to let your donators manage their monthly donation."
+    help.fr = "activez le portail sur https://dashboard.stripe.com/settings/billing/portal pour permettre à vos donateur⋅ices de gérer leur don mensuel."
+    type = "string"
+    default = ""
+    optional = true
 
 [resources]
     [resources.sources.main]
