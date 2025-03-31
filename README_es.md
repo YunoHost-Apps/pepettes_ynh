@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Pepettes para Yunohost
+# Pepettes para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/pepettes)](https://ci-apps.yunohost.org/ci/apps/pepettes/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/pepettes)
@@ -20,7 +20,7 @@ No se debe editar a mano.
 
 A simple donation form with stripe
 
-**Versión actual:** 1.2~ynh1
+**Versión actual:** 1.3~ynh1
 
 **Demo:** <https://donate.yunohost.org>
 ## Documentaciones y recursos

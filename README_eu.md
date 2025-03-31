@@ -20,7 +20,7 @@ EZ editatu eskuz.
 
 A simple donation form with stripe
 
-**Paketatutako bertsioa:** 1.2~ynh1
+**Paketatutako bertsioa:** 1.3~ynh1
 
 **Demoa:** <https://donate.yunohost.org>
 ## Dokumentazioa eta baliabideak
@@ -34,7 +34,7 @@ A simple donation form with stripe
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/pepettes_ynh/tree/testing --debug

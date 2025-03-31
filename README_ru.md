@@ -20,7 +20,7 @@
 
 A simple donation form with stripe
 
-**Поставляемая версия:** 1.2~ynh1
+**Поставляемая версия:** 1.3~ynh1
 
 **Демо-версия:** <https://donate.yunohost.org>
 ## Документация и ресурсы
