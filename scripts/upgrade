@@ -21,7 +21,7 @@ ynh_systemctl --service="$app" --action="stop" --log_path="systemd"
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-ynh_setup_source --dest_dir="$install_dir/sources"
+ynh_setup_source --dest_dir="$install_dir/sources" --full_replace
 chown -R "$app:www-data" "$install_dir"
 
 #=================================================
