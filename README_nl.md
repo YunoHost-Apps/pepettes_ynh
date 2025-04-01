@@ -20,7 +20,7 @@ Hij mag NIET handmatig aangepast worden.
 
 A simple donation form with stripe
 
-**Geleverde versie:** 1.3~ynh1
+**Geleverde versie:** 1.3~ynh2
 
 **Demo:** <https://donate.yunohost.org>
 ## Documentatie en bronnen

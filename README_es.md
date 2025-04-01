@@ -20,7 +20,7 @@ No se debe editar a mano.
 
 A simple donation form with stripe
 
-**Versión actual:** 1.3~ynh1
+**Versión actual:** 1.3~ynh2
 
 **Demo:** <https://donate.yunohost.org>
 ## Documentaciones y recursos
