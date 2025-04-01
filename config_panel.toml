@@ -1,0 +1,81 @@
+version = "1.0"
+
+[main]
+
+services = [ "__APP__" ]
+
+name.en = "Config panel"
+name.fr = "Panneau de configuration"
+
+
+[main.main]
+name = "Main config"
+
+[main.main.project_name]
+ask.en = "Project name"
+ask.fr = "Nom du projet"
+bind = "name:__INSTALL_DIR__/sources/config.yaml"
+help.en = "What's the name of the project which will received donation?"
+help.fr = "Quel est le nom du projet qui va recevoir les dons ?"
+type = "string"
+
+[main.main.contact_url]
+ask.en = "Contact"
+ask.fr = "Contact"
+bind = "contact_url:__INSTALL_DIR__/sources/config.yaml"
+help.en = "Indicate a link to contact you"
+help.fr = "Indiquez un lien pour vous contacter"
+type = "string"
+
+[main.main.logo]
+ask.en = "Logo"
+ask.fr = "Logo"
+bind = "logo:__INSTALL_DIR__/sources/config.yaml"
+help.en = "A link to the logo of your project"
+help.fr = "Un lien vers le logo de votre projet"
+type = "string"
+
+[main.main.favicon]
+ask.en = "Favicon"
+ask.fr = "Favicon"
+bind = "favicon:__INSTALL_DIR__/sources/config.yaml"
+help.en = "A link to the favicon of your project"
+help.fr = "Un lien vers la favicon de votre projet"
+type = "string"
+
+
+[main.stripe]
+name = "Stripe config"
+
+[main.stripe.publishable_key]
+ask.en = "Publishable key"
+ask.fr = "Clé publique"
+bind = "stripe_publishable_key:__INSTALL_DIR__/sources/config.yaml"
+help.en = "Indicate here the Stripe publishable key"
+help.fr = "Indiquez ici la clé publique Stripe"
+type = "string"
+
+[main.stripe.secret_key]
+ask.en = "Secret key"
+ask.fr = "Clé secrète"
+bind = "STRIPE_SECRET_KEY:__INSTALL_DIR__/sources/config.yaml"
+help.en = "Indicate here the Stripe secret key"
+help.fr = "Indiquez ici la clé secrète Stripe"
+type = "string"
+
+[main.stripe.prices]
+ask.en = "Prices"
+ask.fr = "Prix"
+default = "one_time/EUR/price_1IKuPV,recuring/EUR/price_1IKuPV,one_time/USD/price_1IKuPV,recuring/USD/price_1IKuPV"
+help.en = "Indicates here the prices ID of donation products you created in Stripe interfaces. Go on https://dashboard.stripe.com/products to create those donation products."
+help.fr = "Indiquez ici les ID de prix des produits de don Stripe que vous avez créé dans l'interface Stripe. Allez sur https://dashboard.stripe.com/products pour créer ces produits de dons."
+type = "string"
+
+[main.stripe.portal_url]
+ask.en = "Portal link"
+ask.fr = "Portail Stripe"
+bind = "portal_url:__INSTALL_DIR__/sources/config.yaml"
+help.en = "Activate the portal on https://dashboard.stripe.com/settings/billing/portal to let your donators manage their monthly donation."
+help.fr = "Activez le portail sur https://dashboard.stripe.com/settings/billing/portal pour permettre à vos donateur⋅ices de gérer leur don mensuel."
+type = "string"
+optional = true
