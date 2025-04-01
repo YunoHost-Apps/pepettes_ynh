@@ -36,8 +36,8 @@ build_python
 #=================================================
 ynh_script_progression "Updating configuration..."
 
-ynh_config_add --template="gunicorn.py" --destination="$install_dir/gunicorn.py"
-ynh_config_add --template="settings.py" --destination="$install_dir/settings.py"
+ynh_config_add --template="gunicorn.py" --destination="$install_dir/sources/gunicorn.py"
+ynh_config_add --template="settings.py" --destination="$install_dir/sources/settings.py"
 ynh_config_add --template="wsgi.py" --destination="$install_dir/sources/wsgi.py"
 
 print_price_ids >> "$install_dir/sources/settings.py"
