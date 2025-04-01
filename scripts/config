@@ -1,0 +1,22 @@
+#!/bin/bash
+
+source _common.sh
+source /usr/share/yunohost/helpers
+
+ynh_abort_if_errors
+
+#=================================================
+# SPECIFIC SETTERS
+#=================================================
+
+set__prices() {
+
+    print_price_ids >> "$install_dir/sources/settings.py"
+
+    # save the new setting
+    ynh_app_setting_set --key=prices --value="$prices"
+}
+
+#=================================================
+
+ynh_app_config_run "$1"
